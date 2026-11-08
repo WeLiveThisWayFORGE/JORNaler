@@ -1,30 +1,28 @@
 package com.jornaler.app
 
-import com.jornaler.app.widget.WidgetPortraitPlacement
-import com.jornaler.app.widget.widgetPortraitSlot
+import com.jornaler.app.widget.widgetPortraitSizeDp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class WidgetPortraitTest {
     @Test
-    fun tallNarrowWidgetPutsThePortraitAboveTheControls() {
-        val slot = widgetPortraitSlot(widthDp = 200f, heightDp = 280f)
-        assertEquals(WidgetPortraitPlacement.Banner, slot.placement)
-        assertTrue(slot.breadthDp in 80..110)
+    fun narrowWidgetKeepsATinyThumbnail() {
+        val size = widgetPortraitSizeDp(180f)
+        assertEquals(32, size)
+        assertTrue(size < 180 / 3)
     }
 
     @Test
-    fun wideWidgetPutsThePortraitBesideTheControls() {
-        val slot = widgetPortraitSlot(widthDp = 360f, heightDp = 220f)
-        assertEquals(WidgetPortraitPlacement.Side, slot.placement)
-        assertEquals(120, slot.breadthDp)
+    fun tallNarrowWidgetDoesNotGrowAPortraitHeader() {
+        assertEquals(32, widgetPortraitSizeDp(160f))
+        assertEquals(40, widgetPortraitSizeDp(200f))
     }
 
     @Test
-    fun shortWidgetKeepsASideStripSoTheControlsStillFit() {
-        val slot = widgetPortraitSlot(widthDp = 180f, heightDp = 110f)
-        assertEquals(WidgetPortraitPlacement.Side, slot.placement)
-        assertTrue(slot.breadthDp <= 72)
+    fun wideWidgetThumbnailStaysWellUnderAThird() {
+        val size = widgetPortraitSizeDp(360f)
+        assertEquals(40, size)
+        assertTrue(size * 3 < 360)
     }
 }

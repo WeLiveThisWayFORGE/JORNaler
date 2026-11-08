@@ -89,55 +89,29 @@ class JornalerWidget : GlanceAppWidget() {
 
 @Composable
 private fun WidgetContent(pages: List<Entry>, portraitDescription: String) {
-    val size = LocalSize.current
-    val compact = size.width < 190.dp
-    val slot = widgetPortraitSlot(size.width.value, size.height.value)
-    val portrait = GlanceModifier.background(Paper).let { base ->
-        if (slot.placement == WidgetPortraitPlacement.Banner) {
-            base.fillMaxWidth().height(slot.breadthDp.dp)
-        } else {
-            base.width(slot.breadthDp.dp).height(size.height)
-        }
-    }
-    val portraitRes = if (slot.placement == WidgetPortraitPlacement.Banner) {
-        R.drawable.widget_banner
-    } else {
-        R.drawable.widget_portrait
-    }
-    val frame = GlanceModifier
-        .fillMaxSize()
-        .background(Paper)
-        .cornerRadius(24.dp)
-    if (slot.placement == WidgetPortraitPlacement.Banner) {
-        Column(modifier = frame) {
-            Image(
-                provider = ImageProvider(portraitRes),
-                contentDescription = portraitDescription,
-                modifier = portrait,
-                contentScale = ContentScale.Crop,
-            )
-            WidgetBody(pages, compact, GlanceModifier.defaultWeight())
-        }
-    } else {
-        Row(modifier = frame, verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                provider = ImageProvider(portraitRes),
-                contentDescription = portraitDescription,
-                modifier = portrait,
-                contentScale = ContentScale.Crop,
-            )
-            WidgetBody(pages, compact, GlanceModifier.defaultWeight().height(size.height))
-        }
-    }
-}
-
-@Composable
-private fun WidgetBody(pages: List<Entry>, compact: Boolean, modifier: GlanceModifier) {
-    Column(modifier = modifier.padding(12.dp)) {
+    val width = LocalSize.current.width
+    val compact = width < 190.dp
+    Column(
+        modifier = GlanceModifier
+            .fillMaxSize()
+            .background(Paper)
+            .cornerRadius(24.dp)
+            .padding(12.dp),
+    ) {
         Row(
             modifier = GlanceModifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Image(
+                provider = ImageProvider(R.drawable.widget_portrait),
+                contentDescription = portraitDescription,
+                modifier = GlanceModifier
+                    .size(widgetPortraitSizeDp(width.value).dp)
+                    .cornerRadius(8.dp)
+                    .clickable(openApp()),
+                contentScale = ContentScale.Crop,
+            )
+            Spacer(modifier = GlanceModifier.width(8.dp))
             Text(
                 text = "JORNaler",
                 style = TextStyle(

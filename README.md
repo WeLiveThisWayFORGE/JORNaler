@@ -22,7 +22,7 @@ The app is native Android: Kotlin, Jetpack Compose, Room, and Jetpack Glance. Th
 3. Find **JORNaler** and drag it onto the home screen.
 4. Drag the edges to resize it. The list scrolls when there is more than fits.
 
-The widget shows ideas and drafts, most recently updated first. Each row shows the title or first line and a small type and status label. Tap a row to open it in the editor. Tap the title to open the app. **+** opens quick capture. **Today** opens today’s journal when the widget is at least 190dp wide; a narrower widget keeps the title, **+**, and the list. A crop of the writing portrait sits beside the controls on a wide or short widget, and above them on a tall narrow one. The words stay on the paper color, not on the painting, so they stay readable. The widget refreshes when pages change, in light and dark.
+The widget shows ideas and drafts, most recently updated first. Each row shows the title or first line and a small type and status label. Tap a row to open it in the editor. Tap the title, or the small portrait beside it, to open the app. **+** opens quick capture. **Today** opens today’s journal when the widget is at least 190dp wide; a narrower widget keeps the title, the portrait, and **+**. The portrait is a square crop of her face, 32dp on a narrow widget and 40dp on a wider one, in the title row on every size. The list and the controls keep the rest of the space, on the paper color. The widget refreshes when pages change, in light and dark.
 
 The widget title uses the system serif. Home-screen widgets cannot load the app’s bundled Literata font.
 
@@ -50,7 +50,7 @@ SHA-256: `6d1ee6bef77d9fa0f7549406908129a5815a6e24cad2f789b8cfbe647e47582e`
 
 Signing-certificate SHA-256: `4F2940A94A564C016F003A881527305727CBF5980967950910FA1162CD85D50D`
 
-This source is version 1.0.2. A signed 1.0.2 APK is not published.
+This source is version 1.0.3. A signed 1.0.3 APK is not published.
 
 On a phone with USB debugging:
 
@@ -122,14 +122,14 @@ To sign with the permanent release key, set these in the environment for that co
 - `JORNALER_KEY_ALIAS` — key alias
 - `JORNALER_KEY_PASSWORD` — key password, only if it differs from the keystore password
 
-All of the path, keystore password, and alias are required together. If one is set and another is missing, the build fails instead of writing an unsigned or debug-signed APK. When they are set, the signed file is `app/build/outputs/apk/release/app-release.apk`. This repository does not contain a keystore or a signing password. The signed file that is published is the v1.0.1 release above, not a 1.0.2 build.
+All of the path, keystore password, and alias are required together. If one is set and another is missing, the build fails instead of writing an unsigned or debug-signed APK. When they are set, the signed file is `app/build/outputs/apk/release/app-release.apk`. This repository does not contain a keystore or a signing password. The signed file that is published is the v1.0.1 release above, not a 1.0.3 build.
 
 The unit tests cover the notebook. `ReleaseBehaviorTest` checks that a non-debuggable build does not seed sample pages. `ReleaseBuildTest` runs with the release unit tests and checks that the release variant is not debuggable.
 
 - Application id: `com.jornaler.app`
 - Launcher and widget label: JORNaler
 - minSdk 26, targetSdk 37
-- Version 1.0.2 (versionCode 3). versionCode 3 is what lets a build signed with the v1.0.1 release certificate upgrade that install.
+- Version 1.0.3 (versionCode 4). versionCode 4 is what lets a build signed with the same release certificate upgrade the 1.0.2 install.
 
 ## Privacy
 
