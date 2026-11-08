@@ -32,7 +32,7 @@ class AppGraph(context: Context) {
     }
 
     private companion object {
-        const val TAG = "Jornaler"
+        const val TAG = "JORNaler"
     }
 }
 

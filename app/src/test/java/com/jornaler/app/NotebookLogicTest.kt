@@ -185,7 +185,7 @@ class ArchiveAndSharingTest {
             journalDate = "2026-11-08",
         )
         val text = ArchiveJson.encode(listOf(poem, journal), 1_700_000_000_000)
-        assertTrue(text.contains("\"app\": \"Jornaler\""))
+        assertTrue(text.contains("\"app\": \"JORNaler\""))
         val decoded = ArchiveJson.decode(text, ZoneOffset.UTC)
         assertEquals(poem.body, decoded.first { it.id == "poem" }.body)
         assertEquals(PieceStatus.DRAFTING, decoded.first { it.id == "poem" }.status)
@@ -219,7 +219,7 @@ class ArchiveAndSharingTest {
     @Test
     fun importNormalizesMissingJournalDateAndRejectsBadFiles() {
         val raw = """
-            {"version":1,"app":"Jornaler","exportedAt":1,"entries":[
+            {"version":1,"app":"JORNaler","exportedAt":1,"entries":[
               {"id":"j","kind":"JOURNAL","title":"","body":"hi","status":"DRAFTING","createdAt":0,"updatedAt":1}
             ]}
         """.trimIndent()
@@ -227,7 +227,7 @@ class ArchiveAndSharingTest {
         assertEquals("1970-01-01", decoded.single().journalDate)
         assertNull(decoded.single().status)
         assertEquals(
-            "This file is from a newer Jornaler.",
+            "This file is from a newer JORNaler.",
             runCatching { ArchiveJson.decode("""{"version":2,"exportedAt":1,"entries":[]}""") }.exceptionOrNull()?.message,
         )
         assertEquals(
@@ -243,7 +243,7 @@ class ArchiveAndSharingTest {
         val text = Sharing.plainText(
             entry(title = "Pocket star", body = "I found a star.\nIt was a button.\n"),
         )
-        assertEquals("Pocket star\n\nI found a star.\nIt was a button.\n\n— Jornaler\n", text)
+        assertEquals("Pocket star\n\nI found a star.\nIt was a button.\n\n— JORNaler\n", text)
     }
 
     @Test

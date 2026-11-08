@@ -224,7 +224,7 @@ fun EditorScreen(
                     verticalArrangement = Arrangement.Center,
                 ) {
                     Text("This page is gone.", style = MaterialTheme.typography.titleLarge)
-                    TextButton(onClick = onBack) { Text("Back to Jornaler") }
+                    TextButton(onClick = onBack) { Text("Back to JORNaler") }
                 }
             }
             else -> {

@@ -215,7 +215,7 @@ fun HomeScreen(
                             modifier = Modifier.fillMaxWidth(),
                         )
                     } else {
-                        Text("Jornaler", fontFamily = FrauncesDisplay)
+                        Text("JORNaler", fontFamily = FrauncesDisplay)
                     }
                 },
                 navigationIcon = {

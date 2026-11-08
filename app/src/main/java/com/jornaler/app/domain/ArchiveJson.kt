@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 @Serializable
 data class ArchiveFile(
     val version: Int = ArchiveJson.VERSION,
-    val app: String = "Jornaler",
+    val app: String = "JORNaler",
     val exportedAt: Long,
     val entries: List<Entry> = emptyList(),
 )
@@ -34,19 +34,19 @@ object ArchiveJson {
     }
 
     fun encode(entries: List<Entry>, exportedAt: Long): String =
-        json.encodeToString(ArchiveFile(version = VERSION, app = "Jornaler", exportedAt = exportedAt, entries = entries))
+        json.encodeToString(ArchiveFile(version = VERSION, app = "JORNaler", exportedAt = exportedAt, entries = entries))
 
     fun decode(text: String, zone: ZoneId = ZoneId.systemDefault()): List<Entry> {
         val file = try {
             json.decodeFromString<ArchiveFile>(text)
         } catch (_: Exception) {
-            throw IllegalArgumentException("This file isn't a Jornaler backup.")
+            throw IllegalArgumentException("This file isn't a JORNaler backup.")
         }
         if (file.version > VERSION) {
-            throw IllegalArgumentException("This file is from a newer Jornaler.")
+            throw IllegalArgumentException("This file is from a newer JORNaler.")
         }
         if (file.version < 1) {
-            throw IllegalArgumentException("This file isn't a Jornaler backup.")
+            throw IllegalArgumentException("This file isn't a JORNaler backup.")
         }
         return file.entries.map { normalize(it, zone) }
     }

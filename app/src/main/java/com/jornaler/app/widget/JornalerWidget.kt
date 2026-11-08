@@ -97,7 +97,7 @@ private fun WidgetContent(pages: List<Entry>) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Jornaler",
+                text = "JORNaler",
                 style = TextStyle(
                     color = Ink,
                     fontSize = if (compact) 16.sp else 18.sp,

@@ -185,7 +185,7 @@ object Sharing {
         }
         append(entry.body.trimEnd())
         if (isNotEmpty() && !endsWith("\n")) append('\n')
-        append("\n— Jornaler\n")
+        append("\n— JORNaler\n")
     }
 }
 
