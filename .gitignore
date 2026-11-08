@@ -1,0 +1,11 @@
+.gradle/
+build/
+agent-tools/
+local.properties
+*.iml
+.idea/
+.cxx/
+captures/
+*.apk
+*.aab
+.DS_Store

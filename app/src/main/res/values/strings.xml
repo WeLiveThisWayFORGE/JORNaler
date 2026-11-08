@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JORNaler</string>
+    <string name="widget_name">JORNaler</string>
+    <string name="widget_description">In-progress poems and ideas, with a shortcut to today\'s journal.</string>
+</resources>
