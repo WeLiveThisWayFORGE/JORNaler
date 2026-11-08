@@ -8,6 +8,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -22,6 +24,7 @@ import androidx.glance.color.ColorProvider
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
@@ -36,6 +39,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import com.jornaler.app.MainActivity
 import com.jornaler.app.NotebookIntents
+import com.jornaler.app.R
 import com.jornaler.app.domain.Formatting
 import com.jornaler.app.domain.Library
 import com.jornaler.app.domain.Shelf
@@ -76,15 +80,17 @@ class JornalerWidget : GlanceAppWidget() {
             Shelf.IN_PROGRESS,
             "",
         )
+        val portraitDescription = context.getString(R.string.widget_portrait_description)
         provideContent {
-            WidgetContent(pages)
+            WidgetContent(pages, portraitDescription)
         }
     }
 }
 
 @Composable
-private fun WidgetContent(pages: List<Entry>) {
-    val compact = LocalSize.current.width < 190.dp
+private fun WidgetContent(pages: List<Entry>, portraitDescription: String) {
+    val width = LocalSize.current.width
+    val compact = width < 190.dp
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
@@ -96,6 +102,16 @@ private fun WidgetContent(pages: List<Entry>) {
             modifier = GlanceModifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Image(
+                provider = ImageProvider(R.drawable.widget_portrait),
+                contentDescription = portraitDescription,
+                modifier = GlanceModifier
+                    .size(widgetPortraitSizeDp(width.value).dp)
+                    .cornerRadius(8.dp)
+                    .clickable(openApp()),
+                contentScale = ContentScale.Crop,
+            )
+            Spacer(modifier = GlanceModifier.width(8.dp))
             Text(
                 text = "JORNaler",
                 style = TextStyle(

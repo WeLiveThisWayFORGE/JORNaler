@@ -11,8 +11,8 @@ class ReleaseBuildTest {
         assertFalse(BuildConfig.DEBUG)
         assertEquals("release", BuildConfig.BUILD_TYPE)
         assertEquals("com.jornaler.app", BuildConfig.APPLICATION_ID)
-        assertEquals("1.0.1", BuildConfig.VERSION_NAME)
-        assertTrue(BuildConfig.VERSION_CODE > 1)
+        assertEquals("1.0.3", BuildConfig.VERSION_NAME)
+        assertTrue(BuildConfig.VERSION_CODE > 3)
         assertFalse(shouldSeedSamplePages(debuggable = BuildConfig.DEBUG, requested = true))
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
@@ -18,6 +19,9 @@ class MainActivity : ComponentActivity() {
     private var intentToken by mutableIntStateOf(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Platform splash is only the framed icon Android 12+ allows. It is not
+        // held on screen. The full portrait is the first content while pages load.
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val graph = (application as JornalerApp).graph
