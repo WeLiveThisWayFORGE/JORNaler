@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.Jornaler.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/portrait_frame</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_portrait</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/portrait_frame</item>
+        <item name="postSplashScreenTheme">@style/Theme.Jornaler</item>
+    </style>
+
     <style name="Theme.Jornaler" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>

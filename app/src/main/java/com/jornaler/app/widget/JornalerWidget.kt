@@ -8,6 +8,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -22,6 +24,7 @@ import androidx.glance.color.ColorProvider
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
@@ -36,6 +39,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import com.jornaler.app.MainActivity
 import com.jornaler.app.NotebookIntents
+import com.jornaler.app.R
 import com.jornaler.app.domain.Formatting
 import com.jornaler.app.domain.Library
 import com.jornaler.app.domain.Shelf
@@ -76,22 +80,60 @@ class JornalerWidget : GlanceAppWidget() {
             Shelf.IN_PROGRESS,
             "",
         )
+        val portraitDescription = context.getString(R.string.widget_portrait_description)
         provideContent {
-            WidgetContent(pages)
+            WidgetContent(pages, portraitDescription)
         }
     }
 }
 
 @Composable
-private fun WidgetContent(pages: List<Entry>) {
-    val compact = LocalSize.current.width < 190.dp
-    Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .background(Paper)
-            .cornerRadius(24.dp)
-            .padding(12.dp),
-    ) {
+private fun WidgetContent(pages: List<Entry>, portraitDescription: String) {
+    val size = LocalSize.current
+    val compact = size.width < 190.dp
+    val slot = widgetPortraitSlot(size.width.value, size.height.value)
+    val portrait = GlanceModifier.background(Paper).let { base ->
+        if (slot.placement == WidgetPortraitPlacement.Banner) {
+            base.fillMaxWidth().height(slot.breadthDp.dp)
+        } else {
+            base.width(slot.breadthDp.dp).height(size.height)
+        }
+    }
+    val portraitRes = if (slot.placement == WidgetPortraitPlacement.Banner) {
+        R.drawable.widget_banner
+    } else {
+        R.drawable.widget_portrait
+    }
+    val frame = GlanceModifier
+        .fillMaxSize()
+        .background(Paper)
+        .cornerRadius(24.dp)
+    if (slot.placement == WidgetPortraitPlacement.Banner) {
+        Column(modifier = frame) {
+            Image(
+                provider = ImageProvider(portraitRes),
+                contentDescription = portraitDescription,
+                modifier = portrait,
+                contentScale = ContentScale.Crop,
+            )
+            WidgetBody(pages, compact, GlanceModifier.defaultWeight())
+        }
+    } else {
+        Row(modifier = frame, verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                provider = ImageProvider(portraitRes),
+                contentDescription = portraitDescription,
+                modifier = portrait,
+                contentScale = ContentScale.Crop,
+            )
+            WidgetBody(pages, compact, GlanceModifier.defaultWeight().height(size.height))
+        }
+    }
+}
+
+@Composable
+private fun WidgetBody(pages: List<Entry>, compact: Boolean, modifier: GlanceModifier) {
+    Column(modifier = modifier.padding(12.dp)) {
         Row(
             modifier = GlanceModifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
