@@ -22,21 +22,29 @@ The app is native Android: Kotlin, Jetpack Compose, Room, and Jetpack Glance. Th
 3. Find **JORNaler** and drag it onto the home screen.
 4. Drag the edges to resize it. The list scrolls when there is more than fits.
 
-The widget shows ideas and drafts, most recently updated first. Each row shows the title or first line and a small type and status label. Tap a row to open it in the editor. **+** opens quick capture. **Today** opens today’s journal. The widget refreshes when pages change, in light and dark.
+The widget shows ideas and drafts, most recently updated first. Each row shows the title or first line and a small type and status label. Tap a row to open it in the editor. Tap the title to open the app. **+** opens quick capture. **Today** opens today’s journal when the widget is at least 190dp wide; a narrower widget keeps the title, **+**, and the list. The widget refreshes when pages change, in light and dark.
 
 The widget title uses the system serif. Home-screen widgets cannot load the app’s bundled Literata font.
 
-## Install the debug APK
+## Download and install
 
-Build the debug APK, then install that file. It is signed with the Android debug key, so it is meant for sideloading, not the Play Store. There is no published GitHub release yet.
+Release [v1.0.0](https://github.com/WeLiveThisWayFORGE/JORNaler/releases/tag/v1.0.0) attaches `JORNaler-debug.apk`. That file is the debug build of version 1.0.0: application id `com.jornaler.app`, launcher and widget label **JORNaler**. It is signed with the Android debug certificate (`CN=Android Debug, O=Android, C=US`), so it is meant for sideloading, not the Play Store.
+
+Download the APK:
+
+https://github.com/WeLiveThisWayFORGE/JORNaler/releases/download/v1.0.0/JORNaler-debug.apk
+
+SHA-256: `68b3ae5eefa6772010070a61184f123f66fb3d27da936439083bfb539fe2be8b`
+
+Signing-certificate SHA-256: `36B9A6DF55514D96D9A5830A6128B786F50FF0774E0C19556AEC07233B42235F`
 
 On a phone with USB debugging:
 
 ```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r JORNaler-debug.apk
 ```
 
-Or copy the APK onto the phone and open it with the Files app. Allow installs from that source if Android asks. A rebuild signed with the same debug keystore upgrades an existing install of `com.jornaler.app` and keeps the local notebook.
+Or copy the APK onto the phone and open it with the Files app. Allow installs from that source if Android asks. An upgrade has to be signed with this same certificate. A debug build made on another computer uses that computer’s own debug key and cannot replace this install. The notebook stays on the phone when the certificate matches.
 
 A debug build can also drop a few sample pages into an empty notebook:
 
@@ -60,7 +68,9 @@ Then:
 ./gradlew :app:assembleDebug :app:testDebugUnitTest
 ```
 
-The debug APK is written to `app/build/outputs/apk/debug/app-debug.apk`.
+The debug APK is written to `app/build/outputs/apk/debug/app-debug.apk`. Gradle signs it with the debug keystore on the machine that runs the build. That signature matches the v1.0.0 download only when the keystore is the one that signed the published APK. This repository does not contain a keystore or signing password.
+
+`app/src/test/java/com/jornaler/app/NotebookLogicTest.kt` has 20 unit tests. The command above runs them.
 
 - Application id: `com.jornaler.app`
 - minSdk 26, targetSdk 37
