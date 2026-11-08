@@ -21,7 +21,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val graph = (application as JornalerApp).graph
-        if (BuildConfig.DEBUG && intent?.getBooleanExtra(NotebookIntents.EXTRA_SEED, false) == true) {
+        if (shouldSeedSamplePages(
+                BuildConfig.DEBUG,
+                intent?.getBooleanExtra(NotebookIntents.EXTRA_SEED, false) == true,
+            )
+        ) {
             intent.removeExtra(NotebookIntents.EXTRA_SEED)
             lifecycleScope.launch {
                 graph.repository.seedIfEmpty(SamplePages.entries(LocalDate.now()))
@@ -41,7 +45,11 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        if (BuildConfig.DEBUG && intent.getBooleanExtra(NotebookIntents.EXTRA_SEED, false)) {
+        if (shouldSeedSamplePages(
+                BuildConfig.DEBUG,
+                intent.getBooleanExtra(NotebookIntents.EXTRA_SEED, false),
+            )
+        ) {
             intent.removeExtra(NotebookIntents.EXTRA_SEED)
             val graph = (application as JornalerApp).graph
             lifecycleScope.launch {

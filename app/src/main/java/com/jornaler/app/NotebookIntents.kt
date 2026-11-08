@@ -8,3 +8,7 @@ object NotebookIntents {
     const val NAV_QUICK = "quick"
     const val NAV_TODAY = "today"
 }
+
+/** Sample pages are a debug aid. A release build never inserts them. */
+fun shouldSeedSamplePages(debuggable: Boolean, requested: Boolean): Boolean =
+    debuggable && requested
